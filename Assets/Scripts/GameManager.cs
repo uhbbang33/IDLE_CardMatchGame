@@ -6,6 +6,7 @@ using System.Linq;
 using UnityEngine.SceneManagement;
 using Unity.Profiling;
 using UnityEngine.Events;
+using System.Threading;
 
 public class GameManager : MonoBehaviour
 {
@@ -105,10 +106,10 @@ public class GameManager : MonoBehaviour
 
         c -= 1;                                              // 글자 색상 투명하게
         addTxt.color = new Color32(255, 0, 0, c);            // 글자 색상 투명하게
-
         time += Time.deltaTime;
-        if (time > maxTime)
-            Invoke("GameEnd",0f);
+        if (time > maxTime) {
+            Invoke("GameEnd", 0.5f);
+        }
 
         timeTxt.text = time.ToString("N2");
     }
@@ -171,9 +172,9 @@ public class GameManager : MonoBehaviour
 
     void GameEnd()
     {
+        Time.timeScale = 0f;
         isRunning = false;
         endPanel.SetActive(true);
-        Time.timeScale = 0f;
         thisScoreText.text = time.ToString("N2");
 
         //endTxt.SetActive(true);
@@ -190,7 +191,6 @@ public class GameManager : MonoBehaviour
             // 게임종료시 베스트 스코어보다 낮으면 나오는 노래
             audioSource.PlayOneShot(bestscore);
             PlayerPrefs.SetFloat("bestscore", time);
-
         }
         else
         {
@@ -200,6 +200,7 @@ public class GameManager : MonoBehaviour
 
         float maxScore = PlayerPrefs.GetFloat("bestscore");
         maxScoreText.text = maxScore.ToString("N2");
+        
         EndGameBgmStop();
     }
 
@@ -213,7 +214,7 @@ public class GameManager : MonoBehaviour
 
     public void RetryGame()
     {
-        SceneManager.LoadScene("MainScene");
+        SceneManager.LoadScene("GameScene");
     }
 
     public void GoHomeBtn()

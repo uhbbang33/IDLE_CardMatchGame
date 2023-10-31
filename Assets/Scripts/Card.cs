@@ -10,7 +10,6 @@ public class Card : MonoBehaviour
     public Animator anim;
     
     public int spriteNum = 0;
-
     public void OpenCard()
     {
         audioSource.PlayOneShot(flip);
@@ -19,8 +18,10 @@ public class Card : MonoBehaviour
 
         transform.Find("Front").gameObject.SetActive(true);
         transform.Find("Back").gameObject.SetActive(false);
+        string swtime = GameManager.I.timeTxt.text;
+ 
         //closeCard 5초후 실행
-        Invoke("closeCard", 5.0f);
+        //Invoke("CloseCard", 5.0f);
 
         if (GameManager.I.firstCard == null)
         {
@@ -53,7 +54,10 @@ public class Card : MonoBehaviour
         anim.SetBool("isOpen", false);
         transform.Find("Back").gameObject.SetActive(true);
         transform.Find("Front").gameObject.SetActive(false);
-        //선택한 카드 다시 빈칸으로 만들기
-        GameManager.I.firstCard = null;
+        //if (gameObject = GameManager.I.firstCard)
+        //{
+        //    GameManager.I.firstCard = null;
+        //}
     }
+
 }
