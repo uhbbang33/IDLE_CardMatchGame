@@ -7,7 +7,6 @@ using UnityEngine.SceneManagement;
 using Unity.Profiling;
 using UnityEngine.Events;
 using System.Threading;
-using System.Diagnostics;
 
 public class GameManager : MonoBehaviour
 {
@@ -32,6 +31,7 @@ public class GameManager : MonoBehaviour
     float time;
     public float maxTime;
     bool isRunning = true;
+    bool timeover = false;
 
     public AudioManager audioManager;
 
@@ -108,9 +108,10 @@ public class GameManager : MonoBehaviour
         c -= 1;                                              // 글자 색상 투명하게
         addTxt.color = new Color32(255, 0, 0, c);            // 글자 색상 투명하게
         time += Time.deltaTime;
-        if (time > maxTime) {
-            Invoke("GameEnd", 0.5f);
-        }
+        
+        if (time > maxTime)
+            GameEnd();
+
 
         timeTxt.text = time.ToString("N2");
     }
@@ -131,7 +132,8 @@ public class GameManager : MonoBehaviour
             //check = firstCard.GetComponent<Card>().spriteNum;
 
             namelist[check].SetActive(true);            // Active True
-            Invoke("nActiveFalse", 1.0f);               // 1초 후 false
+            StartCoroutine(nActiveFalse(check));
+            //Invoke("nActiveFalse", 1.0f);               // 1초 후 false
 
             firstCard.GetComponent<Card>().DestrotyCard();
             secondCard.GetComponent<Card>().DestrotyCard();
@@ -166,8 +168,9 @@ public class GameManager : MonoBehaviour
     {
         addTxt.gameObject.SetActive(false);                          // addtxt 비활성화 하기
     }
-    void nActiveFalse()
+    IEnumerator nActiveFalse(int check)
     {
+        yield return new WaitForSeconds(1.0f);
         namelist[check].SetActive(false);
     }
 
@@ -176,6 +179,9 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 0f;
         isRunning = false;
         endPanel.SetActive(true);
+        if (time > maxTime)
+            time = maxTime;
+        
         thisScoreText.text = time.ToString("N2");
 
         //endTxt.SetActive(true);
@@ -197,12 +203,10 @@ public class GameManager : MonoBehaviour
         {
             // 게임종료시 베스트 스코어보다 낮으면 나오는 노래
             audioSource.PlayOneShot(lowscore);
-            Debug.Log(time);
         }
 
         float maxScore = PlayerPrefs.GetFloat("bestscore");
         maxScoreText.text = maxScore.ToString("N2");
-        
         EndGameBgmStop();
     }
 

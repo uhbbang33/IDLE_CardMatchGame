@@ -21,7 +21,7 @@ public class Card : MonoBehaviour
         string swtime = GameManager.I.timeTxt.text;
  
         //closeCard 5초후 실행
-        //Invoke("CloseCard", 5.0f);
+        Invoke("CloseCard", 5.0f);
 
         if (GameManager.I.firstCard == null)
         {
