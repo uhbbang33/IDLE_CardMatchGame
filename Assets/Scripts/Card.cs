@@ -20,7 +20,7 @@ public class Card : MonoBehaviour
         transform.Find("Front").gameObject.SetActive(true);
         transform.Find("Back").gameObject.SetActive(false);
         //closeCard 5초후 실행
-        Invoke("closeCard", 5.0f);
+        //Invoke("CloseCard", 5.0f);
 
         if (GameManager.I.firstCard == null)
         {
@@ -54,6 +54,6 @@ public class Card : MonoBehaviour
         transform.Find("Back").gameObject.SetActive(true);
         transform.Find("Front").gameObject.SetActive(false);
         //선택한 카드 다시 빈칸으로 만들기
-        GameManager.I.firstCard = null;
+        //GameManager.I.firstCard = null;
     }
 }

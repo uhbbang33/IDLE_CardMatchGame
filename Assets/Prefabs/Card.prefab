@@ -328,9 +328,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 86001e62b14fe4c48a9a22afa7ec19ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  anim: {fileID: 7004415397345941517}
-  flip: {fileID: 8300000, guid: 304bc8c96ccc8874cb530157568889df, type: 3}
+  flip: {fileID: 8300000, guid: b99582b988f025e45b37d1672d12e033, type: 3}
   audioSource: {fileID: 9064753496278656420}
+  anim: {fileID: 7004415397345941517}
+  spriteNum: 0
 --- !u!114 &5147611482666461727
 MonoBehaviour:
   m_ObjectHideFlags: 0

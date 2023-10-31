@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -24,12 +24,14 @@ public class GameManager : MonoBehaviour
     public GameObject endPanel;
 
     private RectTransform transaddtxt;
+    private Button button;
     byte c;
     public int check;
 
     float time;
     public float maxTime;
     bool isRunning = true;
+
 
     public AudioManager audioManager;
 
@@ -39,11 +41,12 @@ public class GameManager : MonoBehaviour
     public AudioClip lowscore;
     public AudioSource audioSource;
 
-    public Sprite[] sprites;    // sprite¸¦ InspectorÃ¢¿¡¼­ ¹Ş±â À§ÇÑ ¼±¾ğ
-    List<GameObject> cardList;  // cardµéÀ» ´ãÀ» cardList, ÇöÀç´Â card¸¦ ¼¯´Âµ¥ »ç¿ë
+    public Sprite[] sprites;    // spriteë¥¼ Inspectorì°½ì—ì„œ ë°›ê¸° ìœ„í•œ ì„ ì–¸
+    List<GameObject> cardList;  // cardë“¤ì„ ë‹´ì„ cardList, í˜„ì¬ëŠ” cardë¥¼ ì„ëŠ”ë° ì‚¬ìš©
     public List<GameObject> namelist;
 
-    //enum TeamName { ¹®¿øÁ¤, Á¶º´¿õ, ±è±¹¹Î, ±èÁ¾¿í, ±èÈñÁø, ¹ÚÁØÇü}
+
+    //enum TeamName { ë¬¸ì›ì •, ì¡°ë³‘ì›…, ê¹€êµ­ë¯¼, ê¹€ì¢…ìš±, ê¹€í¬ì§„, ë°•ì¤€í˜•}
 
     private void Awake()
     {
@@ -52,6 +55,7 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
+
         transaddtxt = addTxt.GetComponent<RectTransform>();
         Time.timeScale = 1.0f;
 
@@ -60,13 +64,13 @@ public class GameManager : MonoBehaviour
         Sprite tempSprite = sprites[0];
         int tempSpriteNum = 0;
 
-        // 12°³ÀÇ Ä«µå »ı¼º
-        // Ä«µå sprite¸¦ ¼øÂ÷ÀûÀ¸·Î ³Ö¾îÁÜ
+        // 12ê°œì˜ ì¹´ë“œ ìƒì„±
+        // ì¹´ë“œ spriteë¥¼ ìˆœì°¨ì ìœ¼ë¡œ ë„£ì–´ì¤Œ
         for (int i = 0; i < 12; ++i)
         {
-            // Ä«µå´Â 12°³ »ı¼ºµÇ¾î¾ß ÇÏ´Âµ¥ sprite´Â 6°³
-            // 2°³ÀÇ Ä«µå´Â °°Àº Ä«µå¿©¾ß ÇÏ¹Ç·Î
-            if (i % 2 == 0)     // 0, 2, 4, 6, 8, 10 ÀÏ¶§¸¸ sprite°¡ ¹Ù²ñ
+            // ì¹´ë“œëŠ” 12ê°œ ìƒì„±ë˜ì–´ì•¼ í•˜ëŠ”ë° spriteëŠ” 6ê°œ
+            // 2ê°œì˜ ì¹´ë“œëŠ” ê°™ì€ ì¹´ë“œì—¬ì•¼ í•˜ë¯€ë¡œ
+            if (i % 2 == 0)     // 0, 2, 4, 6, 8, 10 ì¼ë•Œë§Œ spriteê°€ ë°”ë€œ
             {
                 tempSprite = sprites[i / 2];
                 tempSpriteNum = i / 2;
@@ -75,17 +79,17 @@ public class GameManager : MonoBehaviour
             GameObject newCard = Instantiate(card);
             newCard.transform.parent = GameObject.Find("Cards").transform;
 
-            float x = (i / 4) * 1.4f - 2.1f;
-            float y = (i % 4) * 1.4f - 3.0f;
+            float x = (i / 3) * 1.4f - 2.1f;
+            float y = (i % 3) * 1.4f - 3.0f;
             newCard.transform.position = new Vector3(x, y, 0);
 
 
             newCard.transform.Find("Front").GetComponent<SpriteRenderer>().sprite = tempSprite;
-            newCard.GetComponent<Card>().spriteNum = tempSpriteNum; // card¿¡ spriteNum ³Ö¾îÁÖ±â
-            cardList.Add(newCard);  // List¿¡ »ı¼ºÇÑ Ä«µå ³Ö¾îÁÖ±â
+            newCard.GetComponent<Card>().spriteNum = tempSpriteNum; // cardì— spriteNum ë„£ì–´ì£¼ê¸°
+            cardList.Add(newCard);  // Listì— ìƒì„±í•œ ì¹´ë“œ ë„£ì–´ì£¼ê¸°
         }
 
-        // Ä«µå ¼¯±â
+        // ì¹´ë“œ ì„ê¸°
         for(int i = cardList.Count- 1; i> 0; --i)
         {
             int randomNum = Random.Range(0, i);
@@ -99,12 +103,12 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
-        float addy = transaddtxt.anchoredPosition.y;         // addtxt À§Ä¡
-        addy += 0.5f;                                        // addtxt y°ª »ó½Â
-        transaddtxt.anchoredPosition = new Vector2(0, addy);  // addtxt y°ª »ó½Â
+        float addy = transaddtxt.anchoredPosition.y;         // addtxt ìœ„ì¹˜
+        addy += 0.5f;                                        // addtxt yê°’ ìƒìŠ¹
+        transaddtxt.anchoredPosition = new Vector2(0, addy);  // addtxt yê°’ ìƒìŠ¹
 
-        c -= 1;                                              // ±ÛÀÚ »ö»ó Åõ¸íÇÏ°Ô
-        addTxt.color = new Color32(255, 0, 0, c);            // ±ÛÀÚ »ö»ó Åõ¸íÇÏ°Ô
+        c -= 1;                                              // ê¸€ì ìƒ‰ìƒ íˆ¬ëª…í•˜ê²Œ
+        addTxt.color = new Color32(255, 0, 0, c);            // ê¸€ì ìƒ‰ìƒ íˆ¬ëª…í•˜ê²Œ
 
         time += Time.deltaTime;
         if (time > maxTime)
@@ -122,14 +126,14 @@ public class GameManager : MonoBehaviour
         {
             audioSource.PlayOneShot(match);
 
-            string info = firstCard.GetComponentInChildren<SpriteRenderer>().sprite.name;   // spriteÀÇ ÀÌ¸§ rtanx info¿¡ ÀúÀå
-            check = int.Parse(info.Substring(info.Length - 1)) -1;  // rtanx ÀÇ xºÎºĞ ÀÚ¸£±â, int ·Î º¯Çü
-            // ¹è¿­Àº 0ºÎÅÍ ½ÃÀÛÇÏ¹Ç·Î -1
+            string info = firstCard.GetComponentInChildren<SpriteRenderer>().sprite.name;   // spriteì˜ ì´ë¦„ rtanx infoì— ì €ì¥
+            check = int.Parse(info.Substring(info.Length - 1)) -1;  // rtanx ì˜ xë¶€ë¶„ ìë¥´ê¸°, int ë¡œ ë³€í˜•
+            // ë°°ì—´ì€ 0ë¶€í„° ì‹œì‘í•˜ë¯€ë¡œ -1
 
             //check = firstCard.GetComponent<Card>().spriteNum;
 
             namelist[check].SetActive(true);            // Active True
-            Invoke("nActiveFalse", 1.0f);               // 1ÃÊ ÈÄ false
+            Invoke("nActiveFalse", 1.0f);               // 1ì´ˆ í›„ false
 
             firstCard.GetComponent<Card>().DestrotyCard();
             secondCard.GetComponent<Card>().DestrotyCard();
@@ -147,13 +151,13 @@ public class GameManager : MonoBehaviour
             firstCard.GetComponent<Card>().CloseCard();
             secondCard.GetComponent<Card>().CloseCard();
 
-            // ½Ã°£ Ãß°¡ ±â´É
+            // ì‹œê°„ ì¶”ê°€ ê¸°ëŠ¥
             time += 5;
-            addTxt.color = new Color32(255, 0, 0, 255);             // ±ÛÀÚ»ö RED
-            c = 0;                                                  // Åõ¸íµµ ÃÊ±âÈ­
-            transaddtxt.anchoredPosition = new Vector2(0, 450);     // ±ÛÀÚ À§Ä¡ ÃÊ±âÈ­ (ÁøÇà½Ã°£ À§)
-            addTxt.gameObject.SetActive(true);                      // addTXT È°¼ºÈ­
-            Invoke("ActiveFalse", 1.0f);                            // 1ÃÊ ÈÄ ActiveFalse ½ÇÇà
+            addTxt.color = new Color32(255, 0, 0, 255);             // ê¸€ììƒ‰ RED
+            c = 0;                                                  // íˆ¬ëª…ë„ ì´ˆê¸°í™”
+            transaddtxt.anchoredPosition = new Vector2(0, 450);     // ê¸€ì ìœ„ì¹˜ ì´ˆê¸°í™” (ì§„í–‰ì‹œê°„ ìœ„)
+            addTxt.gameObject.SetActive(true);                      // addTXT í™œì„±í™”
+            Invoke("ActiveFalse", 1.0f);                            // 1ì´ˆ í›„ ActiveFalse ì‹¤í–‰
         }
 
         firstCard = null;
@@ -162,7 +166,7 @@ public class GameManager : MonoBehaviour
 
     void ActiveFalse()
     {
-        addTxt.gameObject.SetActive(false);                          // addtxt ºñÈ°¼ºÈ­ ÇÏ±â
+        addTxt.gameObject.SetActive(false);                          // addtxt ë¹„í™œì„±í™” í•˜ê¸°
     }
     void nActiveFalse()
     {
@@ -180,21 +184,21 @@ public class GameManager : MonoBehaviour
 
         if (PlayerPrefs.HasKey("bestscore") == false)
         {
-            // °ÔÀÓÁ¾·á½Ã º£½ºÆ® ½ºÄÚ¾î¸é ³ª¿À´Â ³ë·¡
+            // ê²Œì„ì¢…ë£Œì‹œ ë² ìŠ¤íŠ¸ ìŠ¤ì½”ì–´ë©´ ë‚˜ì˜¤ëŠ” ë…¸ë˜
             audioSource.PlayOneShot(bestscore);
             PlayerPrefs.SetFloat("bestscore", time);
 
         }
         else if (time < PlayerPrefs.GetFloat("bestscore"))
         {
-            // °ÔÀÓÁ¾·á½Ã º£½ºÆ® ½ºÄÚ¾îº¸´Ù ³·À¸¸é ³ª¿À´Â ³ë·¡
+            // ê²Œì„ì¢…ë£Œì‹œ ë² ìŠ¤íŠ¸ ìŠ¤ì½”ì–´ë³´ë‹¤ ë‚®ìœ¼ë©´ ë‚˜ì˜¤ëŠ” ë…¸ë˜
             audioSource.PlayOneShot(bestscore);
             PlayerPrefs.SetFloat("bestscore", time);
 
         }
         else
         {
-            // °ÔÀÓÁ¾·á½Ã º£½ºÆ® ½ºÄÚ¾îº¸´Ù ³·À¸¸é ³ª¿À´Â ³ë·¡
+            // ê²Œì„ì¢…ë£Œì‹œ ë² ìŠ¤íŠ¸ ìŠ¤ì½”ì–´ë³´ë‹¤ ë‚®ìœ¼ë©´ ë‚˜ì˜¤ëŠ” ë…¸ë˜
             audioSource.PlayOneShot(lowscore);
         }
 
@@ -213,7 +217,7 @@ public class GameManager : MonoBehaviour
 
     public void RetryGame()
     {
-        SceneManager.LoadScene("MainScene");
+        SceneManager.LoadScene("MainScene1");
     }
 
     public void GoHomeBtn()

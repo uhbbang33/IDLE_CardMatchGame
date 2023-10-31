@@ -2003,7 +2003,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 2
   m_TargetDisplay: 0
 --- !u!224 &1456983997
 RectTransform:
@@ -2378,6 +2378,7 @@ GameObject:
   - component: {fileID: 1702737424}
   - component: {fileID: 1702737423}
   - component: {fileID: 1702737422}
+  - component: {fileID: 1702737426}
   m_Layer: 5
   m_Name: EndBtn
   m_TagString: Untagged
@@ -2523,6 +2524,18 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!114 &1702737426
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1702737420}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee227bfacf24abd4a9a0a524bff96629, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1775964784
 GameObject:
   m_ObjectHideFlags: 0
@@ -2837,7 +2850,7 @@ MonoBehaviour:
   thisScoreText: {fileID: 662937977}
   endPanel: {fileID: 1365248645}
   check: 0
-  maxTime: 100
+  maxTime: 20
   audioManager: {fileID: 698801056}
   match: {fileID: 8300000, guid: 3533bf50ad517a84a9d2473a1e938d51, type: 3}
   failed: {fileID: 8300000, guid: 3a89e24d07ba5d446b10ca0796804234, type: 3}
