@@ -54,6 +54,6 @@ public class Card : MonoBehaviour
         transform.Find("Back").gameObject.SetActive(true);
         transform.Find("Front").gameObject.SetActive(false);
         //선택한 카드 다시 빈칸으로 만들기
-        //GameManager.I.firstCard = null;
+        GameManager.I.firstCard = null;
     }
 }
