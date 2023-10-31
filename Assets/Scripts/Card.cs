@@ -54,10 +54,9 @@ public class Card : MonoBehaviour
         anim.SetBool("isOpen", false);
         transform.Find("Back").gameObject.SetActive(true);
         transform.Find("Front").gameObject.SetActive(false);
-        //if (gameObject = GameManager.I.firstCard)
-        //{
-        //    GameManager.I.firstCard = null;
-        //}
+
+        if (gameObject == GameManager.I.firstCard)
+            GameManager.I.firstCard = null;
     }
 
 }

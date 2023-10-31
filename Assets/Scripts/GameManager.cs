@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 using Unity.Profiling;
 using UnityEngine.Events;
 using System.Threading;
+using System.Diagnostics;
 
 public class GameManager : MonoBehaviour
 {
@@ -196,6 +197,7 @@ public class GameManager : MonoBehaviour
         {
             // 게임종료시 베스트 스코어보다 낮으면 나오는 노래
             audioSource.PlayOneShot(lowscore);
+            Debug.Log(time);
         }
 
         float maxScore = PlayerPrefs.GetFloat("bestscore");
