@@ -29,6 +29,7 @@ public class GameManager : MonoBehaviour
 
     float time;
     public float maxTime;
+    public float warningTime;
     bool isRunning = true;
 
     public AudioManager audioManager;
@@ -43,7 +44,7 @@ public class GameManager : MonoBehaviour
     List<GameObject> cardList;  // card들을 담을 cardList, 현재는 card를 섞는데 사용
     public List<GameObject> namelist;
 
-    //enum TeamName { 문원정, 조병웅, 김국민, 김종욱, 김희진, 박준형}
+    public GameObject warningBackground;
 
     private void Awake()
     {
@@ -106,9 +107,16 @@ public class GameManager : MonoBehaviour
         c -= 1;                                              // 글자 색상 투명하게
         addTxt.color = new Color32(255, 0, 0, c);            // 글자 색상 투명하게
 
+
         time += Time.deltaTime;
+
+        if (time > warningTime)
+        {
+            warningBackground.gameObject.SetActive(true);
+            audioManager.GetComponent<AudioSource>().pitch = 1.5f;
+        }
         if (time > maxTime)
-            Invoke("GameEnd",0f);
+            Invoke("GameEnd", 0.5f);
 
         timeTxt.text = time.ToString("N2");
     }
@@ -136,9 +144,7 @@ public class GameManager : MonoBehaviour
 
             int cardsLeft = GameObject.Find("Cards").transform.childCount;
             if (cardsLeft == 2)
-            {
-                Invoke("GameEnd", 1f);
-            }
+                Invoke("GameEnd", 0.5f);
         }
         else
         {
@@ -171,6 +177,8 @@ public class GameManager : MonoBehaviour
 
     void GameEnd()
     {
+        warningBackground.gameObject.SetActive(false);
+
         isRunning = false;
         endPanel.SetActive(true);
         Time.timeScale = 0f;
@@ -213,7 +221,7 @@ public class GameManager : MonoBehaviour
 
     public void RetryGame()
     {
-        SceneManager.LoadScene("MainScene");
+        SceneManager.LoadScene("GameScene");
     }
 
     public void GoHomeBtn()

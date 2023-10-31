@@ -7,7 +7,7 @@ public class EndText : MonoBehaviour
 {
     public void RetryGame()
     {
-        SceneManager.LoadScene("MainScene");
+        SceneManager.LoadScene("GameScene");
     }
 
     public void GoStartScene()

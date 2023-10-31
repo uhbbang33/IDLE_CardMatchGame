@@ -19,9 +19,8 @@ public class Card : MonoBehaviour
 
         transform.Find("Front").gameObject.SetActive(true);
         transform.Find("Back").gameObject.SetActive(false);
-        //closeCard 5초후 실행
-        Invoke("closeCard", 5.0f);
-
+        
+        
         if (GameManager.I.firstCard == null)
         {
             GameManager.I.firstCard = gameObject;
@@ -31,11 +30,14 @@ public class Card : MonoBehaviour
             GameManager.I.secondCard = gameObject;
             GameManager.I.IsMatched();
         }
+
+        //CloseCard 5초후 실행
+        Invoke("CloseCard", 5.0f);
     }
 
     public void DestrotyCard()
     {
-        Invoke("DestroyCardInvoke", 0.5f);
+        Invoke("DestroyCardInvoke", 0f);
     }
 
     void DestroyCardInvoke()
@@ -53,7 +55,12 @@ public class Card : MonoBehaviour
         anim.SetBool("isOpen", false);
         transform.Find("Back").gameObject.SetActive(true);
         transform.Find("Front").gameObject.SetActive(false);
+
         //선택한 카드 다시 빈칸으로 만들기
-        GameManager.I.firstCard = null;
+        //if (GameManager.I.secondCard == null)
+        // GameManager.I.firstCard = null;
+
+        if (gameObject == GameManager.I.firstCard)
+            GameManager.I.firstCard = null;
     }
 }
