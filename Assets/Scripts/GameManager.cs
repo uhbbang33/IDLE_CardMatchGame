@@ -31,7 +31,6 @@ public class GameManager : MonoBehaviour
     float time;
     public float maxTime;
     bool isRunning = true;
-    bool timeover = false;
 
     public AudioManager audioManager;
 
