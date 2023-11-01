@@ -52,6 +52,7 @@ public class GameManager : MonoBehaviour
     public List<GameObject> namelist;
 
     public GameObject warningBackground;
+    public GameObject pauseUI;
     //enum TeamName { 문원정, 조병웅, 김국민, 김종욱, 김희진, 박준형}
 
     private void Awake()
@@ -105,6 +106,7 @@ public class GameManager : MonoBehaviour
             cardList[i].transform.position = cardList[randomNum].transform.position;
             cardList[randomNum].transform.position = tempPosition;
         }
+
     }
 
     void Update()
@@ -256,13 +258,25 @@ public class GameManager : MonoBehaviour
 
     public void RetryGame()
     {
-        // SceneManager.LoadScene("GameScene");
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name); // 준형님걸로
     }
 
     public void GoHomeBtn()
     {
         SceneManager.LoadScene("StartScene");
+    }
+
+    public void ContinueGame()
+    {
+        Time.timeScale = 1.0f;
+        pauseUI.SetActive(false);
+        audioManager.audioSource.Play();
+    }
+
+    public void PauseBtn()
+    {
+        Time.timeScale = 0.0f;
+        pauseUI.SetActive(true);
+        audioManager.audioSource.Pause();
     }
 }
