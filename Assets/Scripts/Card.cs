@@ -4,13 +4,12 @@ using UnityEngine;
 
 public class Card : MonoBehaviour
 {
-    public AudioClip flip;  // À½¾Ç ÆÄÀÏ ÀÚÃ¼
-    public AudioSource audioSource; // ´©°¡ À½¾ÇÀ» ÇÃ·¹ÀÌ ÇÒ °ÍÀÎÁö
+    public AudioClip flip;  // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ã¼
+    public AudioSource audioSource; // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ã·ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
     public Animator anim;
     
     public int spriteNum = 0;
-
     public void OpenCard()
     {
         audioSource.PlayOneShot(flip);
@@ -30,7 +29,7 @@ public class Card : MonoBehaviour
             GameManager.I.IsMatched();
         }
 
-        //CloseCard 5ÃÊÈÄ ½ÇÇà
+        //CloseCard 5ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         Invoke("CloseCard", 5.0f);
     }
 
@@ -55,10 +54,10 @@ public class Card : MonoBehaviour
         transform.Find("Back").gameObject.SetActive(true);
         transform.Find("Front").gameObject.SetActive(false);
 
-        //¼±ÅÃÇÑ Ä«µå ´Ù½Ã ºóÄ­À¸·Î ¸¸µé±â
-
         if (gameObject == GameManager.I.firstCard)
             GameManager.I.firstCard = null;
         //GameManager.I.firstCard = null;
+
     }
+
 }

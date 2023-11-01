@@ -6,6 +6,7 @@ using System.Linq;
 using UnityEngine.SceneManagement;
 using Unity.Profiling;
 using UnityEngine.Events;
+using System.Threading;
 
 public class GameManager : MonoBehaviour
 {
@@ -119,8 +120,11 @@ public class GameManager : MonoBehaviour
             warningBackground.gameObject.SetActive(true);
             audioManager.GetComponent<AudioSource>().pitch = 1.5f;
         }
+
         if (time > maxTime)
-            Invoke("GameEnd", 0.5f);
+            GameEnd();
+
+
 
         timeTxt.text = time.ToString("N2");
     }
@@ -141,7 +145,8 @@ public class GameManager : MonoBehaviour
             //check = firstCard.GetComponent<Card>().spriteNum;
 
             namelist[check].SetActive(true);            // Active True
-            Invoke("nActiveFalse", 1.0f);               // 1초 후 false
+            StartCoroutine(nActiveFalse(check));
+
 
             firstCard.GetComponent<Card>().DestrotyCard();
             secondCard.GetComponent<Card>().DestrotyCard();
@@ -174,18 +179,22 @@ public class GameManager : MonoBehaviour
     {
         addTxt.gameObject.SetActive(false);                          // addtxt 비활성화 하기
     }
-    void nActiveFalse()
+
+    IEnumerator nActiveFalse(int check)
     {
+        yield return new WaitForSeconds(1.0f);
         namelist[check].SetActive(false);
     }
 
     void GameEnd()
     {
         warningBackground.gameObject.SetActive(false);
-
+        Time.timeScale = 0f;
         isRunning = false;
         endPanel.SetActive(true);
-        Time.timeScale = 0f;
+        if (time > maxTime)
+            time = maxTime;
+        
         thisScoreText.text = time.ToString("N2");
 
         //endTxt.SetActive(true);
@@ -202,7 +211,6 @@ public class GameManager : MonoBehaviour
             // 게임종료시 베스트 스코어보다 낮으면 나오는 노래
             audioSource.PlayOneShot(bestscore);
             PlayerPrefs.SetFloat("bestscore", time);
-
         }
         else
         {
@@ -227,6 +235,7 @@ public class GameManager : MonoBehaviour
     {
        // SceneManager.LoadScene("GameScene");
         SceneManager.LoadScene("MainScene1");
+
     }
 
     public void GoHomeBtn()
