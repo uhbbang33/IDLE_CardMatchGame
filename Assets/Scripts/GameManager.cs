@@ -36,13 +36,14 @@ public class GameManager : MonoBehaviour
     float time;
     public float maxTime;
     public float warningTime;
-    bool isRunning = false;
+    public bool isRunning = false;
+    bool isShuffle;
     public AudioManager audioManager;
 
     public AudioClip match;
     public AudioClip failed;
-    public AudioClip bestscore;
-    public AudioClip lowscore;
+    public AudioClip bestscoreSound;
+    public AudioClip lowscoreSound;  
     public AudioSource audioSource;
 
     public Sprite[] sprites;    // sprite를 Inspector창에서 받기 위한 선언
@@ -56,10 +57,12 @@ public class GameManager : MonoBehaviour
     private void Awake()
     {
         I = this;
+        
     }
 
     void Start()
     {
+        isShuffle = false;
         tempSprite = sprites[0];
         tempSpriteNum = 0;
 
@@ -124,14 +127,14 @@ public class GameManager : MonoBehaviour
         }
 
         // 카드 섞기
-        for (int i = cardList.Count- 1; i> 0; --i)
+        for (int i = 0; i < cardList.Count; i++)
         {
-            int randomNum = Random.Range(0, i);
-            Debug.Log(cardList.Count);
+            int randomNum = Random.Range(0, cardList.Count);
+            Debug.Log(points);
             // swap
-            Vector3 tempPosition = cardList[i].transform.position;
-            cardList[i].transform.position = cardList[randomNum].transform.position;
-            cardList[randomNum].transform.position = tempPosition;
+/*            Vector3 tempPosition = points[i];
+            points[i] = points[randomNum];
+            points[randomNum] = tempPosition;*/
         }
     }
 
@@ -141,15 +144,26 @@ public class GameManager : MonoBehaviour
         addy += 0.5f;                                        // addtxt y값 상승
         transaddtxt.anchoredPosition = new Vector2(0, addy); // addtxt y값 상승
         Vector3 speed = Vector3.zero;
-        for (int i = 0; i < points.Count; i++)
-        {
-            cardList[i].transform.position =
-            //Vector3.MoveTowards(cardList[i].transform.position, points[i], 0.01f);
-            //Vector3.SmoothDamp(cardList[i].transform.position, points[i], ref speed, 0.05f);
-            Vector3.Lerp(cardList[i].transform.position, points[i], 0.05f);
-            //Vector3.Slerp(cardList[i].transform.position, points[i], 0.01f);
-        }
         
+        if (!isShuffle)
+        {
+            for (int i = 0; i < points.Count; i++)
+            {
+                if (cardList[i])
+                {
+                    cardList[i].transform.position =
+                    //Vector3.MoveTowards(cardList[i].transform.position, points[i], 0.01f);
+                    //Vector3.SmoothDamp(cardList[i].transform.position, points[i], ref speed, 0.05f);
+                    Vector3.Lerp(cardList[i].transform.position, points[i], 0.05f);
+                    //Vector3.Slerp(cardList[i].transform.position, points[i], 0.01f);
+                }
+            }
+        }
+        if (time > 2)
+        {
+            isShuffle = true;
+        }
+
         c -= 1;                                              // 글자 색상 투명하게
         addTxt.color = new Color32(255, 0, 0, c);            // 글자 색상 투명하게
 
@@ -180,7 +194,7 @@ public class GameManager : MonoBehaviour
             check = int.Parse(info.Substring(info.Length - 1)) -1;  // rtanx 의 x부분 자르기, int 로 변형
             // 배열은 0부터 시작하므로 -1
             // check = firstCard.GetComponent<Card>().spriteNum;
-
+            Debug.Log(check);
             namelist[check].SetActive(true);            // Active True
             StartCoroutine(nActiveFalse(check));
 
@@ -238,24 +252,24 @@ public class GameManager : MonoBehaviour
         //endTxt.SetActive(true);
         if (time >= maxTime)
         {
-            audioSource.PlayOneShot(lowscore);
+            audioSource.PlayOneShot(lowscoreSound);
         }
         else if (PlayerPrefs.HasKey("bestscore") == false)
         {
             // 게임종료시 베스트 스코어면 나오는 노래
-            audioSource.PlayOneShot(bestscore);
+            audioSource.PlayOneShot(bestscoreSound);
             PlayerPrefs.SetFloat("bestscore", time);
         }
         else if (time < PlayerPrefs.GetFloat("bestscore"))
         {
             // 게임종료시 베스트 스코어보다 낮으면 나오는 노래
-            audioSource.PlayOneShot(bestscore);
+            audioSource.PlayOneShot(bestscoreSound);
             PlayerPrefs.SetFloat("bestscore", time);
         }
         else
         {
             // 게임종료시 베스트 스코어보다 낮으면 나오는 노래
-            audioSource.PlayOneShot(lowscore);
+            audioSource.PlayOneShot(lowscoreSound);
         }
 
         float maxScore = PlayerPrefs.GetFloat("bestscore");
