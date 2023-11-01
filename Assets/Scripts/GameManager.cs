@@ -116,7 +116,7 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
-        if(isRunning)
+        if (isRunning)
         {
             float addy = transaddtxt.anchoredPosition.y;         // addtxt 위치
             addy += 0.5f;                                        // addtxt y값 상승
@@ -149,9 +149,8 @@ public class GameManager : MonoBehaviour
 
     public void IsMatched()
     {
-
         if (isRunning)
-        trialNum++;                 // IsMatched가 실행될 때, trial Num에 1 추가
+            trialNum++;                 // IsMatched가 실행될 때, trial Num에 1 추가
         if (SceneManager.GetActiveScene().name == "MainScene3_Woong")
         {
             trialLeftText.text = (trialLeft - trialNum).ToString() + "회";  // 변화 있을 때마다 업데이트
@@ -163,47 +162,47 @@ public class GameManager : MonoBehaviour
         int firstCardSpriteNum = firstCard.GetComponent<Card>().spriteNum;
         int secondCardSpriteNum = secondCard.GetComponent<Card>().spriteNum;
 
-        
-            if (firstCardSpriteNum == secondCardSpriteNum)
-            {
-                audioSource.PlayOneShot(match);
-                string info = firstCard.GetComponentInChildren<SpriteRenderer>().sprite.name;   // sprite의 이름 rtanx info에 저장
-                check = int.Parse(info.Substring(info.Length - 1)) - 1;  // rtanx 의 x부분 자르기, int 로 변형
-                                                                         // 배열은 0부터 시작하므로 -1
 
-                //check = firstCard.GetComponent<Card>().spriteNum;
+        if (firstCardSpriteNum == secondCardSpriteNum)
+        {
+            audioSource.PlayOneShot(match);
+            string info = firstCard.GetComponentInChildren<SpriteRenderer>().sprite.name;   // sprite의 이름 rtanx info에 저장
+            check = int.Parse(info.Substring(info.Length - 1)) - 1;  // rtanx 의 x부분 자르기, int 로 변형
+                                                                     // 배열은 0부터 시작하므로 -1
 
-                namelist[check].SetActive(true);            // Active True
-                StartCoroutine(nActiveFalse(check));
+            //check = firstCard.GetComponent<Card>().spriteNum;
+
+            namelist[check].SetActive(true);            // Active True
+            StartCoroutine(nActiveFalse(check));
 
 
-                firstCard.GetComponent<Card>().DestrotyCard();
-                secondCard.GetComponent<Card>().DestrotyCard();
+            firstCard.GetComponent<Card>().DestrotyCard();
+            secondCard.GetComponent<Card>().DestrotyCard();
 
-                int cardsLeft = GameObject.Find("Cards").transform.childCount;
-                if (cardsLeft == 2)
-                    Invoke("GameEnd", 0.5f);
-            }
-            else
-            {
-                audioSource.PlayOneShot(failed);
-
-                firstCard.GetComponent<Card>().CloseCard();
-                secondCard.GetComponent<Card>().CloseCard();
-
-                // 시간 추가 기능
-                time += 5;
-                addTxt.color = new Color32(255, 0, 0, 255);             // 글자색 RED
-                c = 0;                                                  // 투명도 초기화
-                transaddtxt.anchoredPosition = new Vector2(0, 450);     // 글자 위치 초기화 (진행시간 위)
-                addTxt.gameObject.SetActive(true);                      // addTXT 활성화
-                Invoke("ActiveFalse", 1.0f);                            // 1초 후 ActiveFalse 실행
-            }
-
-            firstCard = null;
-            secondCard = null;
+            int cardsLeft = GameObject.Find("Cards").transform.childCount;
+            if (cardsLeft == 2)
+                Invoke("GameEnd", 0.5f);
         }
+        else
+        {
+            audioSource.PlayOneShot(failed);
+
+            firstCard.GetComponent<Card>().CloseCard();
+            secondCard.GetComponent<Card>().CloseCard();
+
+            // 시간 추가 기능
+            time += 5;
+            addTxt.color = new Color32(255, 0, 0, 255);             // 글자색 RED
+            c = 0;                                                  // 투명도 초기화
+            transaddtxt.anchoredPosition = new Vector2(0, 450);     // 글자 위치 초기화 (진행시간 위)
+            addTxt.gameObject.SetActive(true);                      // addTXT 활성화
+            Invoke("ActiveFalse", 1.0f);                            // 1초 후 ActiveFalse 실행
+        }
+
+        firstCard = null;
+        secondCard = null;
     }
+
 
     void ActiveFalse()
     {
@@ -233,7 +232,7 @@ public class GameManager : MonoBehaviour
         thisScoreText.text = time.ToString("N2");
 
         /*하드 게임 플레이시 최고점수 및 현재점수 기록*/
-        if(sceneName == "MainScene2")
+        if (sceneName == "MainScene2")
         {
             GameHardScore();
         }
@@ -248,7 +247,7 @@ public class GameManager : MonoBehaviour
         }
 
         //endTxt.SetActive(true);
-        
+
     }
 
     /*노말 게임 최고점수 현재점수 기록*/
@@ -397,3 +396,4 @@ public class GameManager : MonoBehaviour
         audioManager.audioSource.Pause();
     }
 }
+
