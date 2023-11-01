@@ -19,8 +19,7 @@ public class Card : MonoBehaviour
 
         transform.Find("Front").gameObject.SetActive(true);
         transform.Find("Back").gameObject.SetActive(false);
-        
-        
+
         if (GameManager.I.firstCard == null)
         {
             GameManager.I.firstCard = gameObject;
@@ -57,10 +56,9 @@ public class Card : MonoBehaviour
         transform.Find("Front").gameObject.SetActive(false);
 
         //선택한 카드 다시 빈칸으로 만들기
-        //if (GameManager.I.secondCard == null)
-        // GameManager.I.firstCard = null;
 
         if (gameObject == GameManager.I.firstCard)
             GameManager.I.firstCard = null;
+        //GameManager.I.firstCard = null;
     }
 }

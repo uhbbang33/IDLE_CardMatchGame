@@ -876,7 +876,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 0.1
+  m_Volume: 0.3
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -2212,7 +2212,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 0}
-  m_RaycastTarget: 0
+  m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -2378,6 +2378,7 @@ GameObject:
   - component: {fileID: 1702737424}
   - component: {fileID: 1702737423}
   - component: {fileID: 1702737422}
+  - component: {fileID: 1702737426}
   m_Layer: 5
   m_Name: EndBtn
   m_TagString: Untagged
@@ -2523,6 +2524,18 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!114 &1702737426
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1702737420}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee227bfacf24abd4a9a0a524bff96629, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1775964784
 GameObject:
   m_ObjectHideFlags: 0
@@ -2731,7 +2744,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 0.1
+  m_Volume: 0.5
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -2837,8 +2850,7 @@ MonoBehaviour:
   thisScoreText: {fileID: 662937977}
   endPanel: {fileID: 1365248645}
   check: 0
-  maxTime: 50
-  warningTime: 30
+  maxTime: 20
   audioManager: {fileID: 698801056}
   match: {fileID: 8300000, guid: 3533bf50ad517a84a9d2473a1e938d51, type: 3}
   failed: {fileID: 8300000, guid: 3a89e24d07ba5d446b10ca0796804234, type: 3}
@@ -2859,7 +2871,6 @@ MonoBehaviour:
   - {fileID: 1912294159}
   - {fileID: 1554784244}
   - {fileID: 1201518786}
-  warningBackground: {fileID: 1671634241}
 --- !u!4 &1860800780
 Transform:
   m_ObjectHideFlags: 0
