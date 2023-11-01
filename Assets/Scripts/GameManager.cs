@@ -33,6 +33,10 @@ public class GameManager : MonoBehaviour
     public float maxTime;
     public float warningTime;
     bool isRunning = true;
+    int trialNum = 0;                          // 매칭 시도 횟수 n회의 자리 만들어줌
+    public Text trialText;                 // 매칭 시도 횟수를 텍스트로 만들어주기 위한 자리를 만들어줌
+    public int trialLeft;
+    public Text trialLeftText;
 
 
     public AudioManager audioManager;
@@ -92,7 +96,7 @@ public class GameManager : MonoBehaviour
         }
 
         // 카드 섞기
-        for(int i = cardList.Count- 1; i> 0; --i)
+        for (int i = cardList.Count - 1; i > 0; --i)
         {
             int randomNum = Random.Range(0, i);
 
@@ -123,22 +127,38 @@ public class GameManager : MonoBehaviour
         if (time > maxTime)
             GameEnd();
 
-
-
         timeTxt.text = time.ToString("N2");
+
+        if (SceneManager.GetActiveScene().name == "MainScene3_Woong")
+        {
+            if (trialLeft == trialNum)
+            {
+                GameEnd();
+                time = maxTime;
+            }
+        }
     }
 
     public void IsMatched()
     {
+        trialNum++;                 // IsMatched가 실행될 때, trial Num에 1 추가
+        if (SceneManager.GetActiveScene().name == "MainScene3_Woong")
+        {
+            trialLeftText.text = (trialLeft - trialNum).ToString() + "회";  // 변화 있을 때마다 업데이트
+            if (trialLeft - trialNum < 10)
+            {
+                trialLeftText.color = new Color32(255, 0, 0, 255);          // 남은 기회가 10회 미만일 때 빨간색으로 바뀜
+            }
+        }
         int firstCardSpriteNum = firstCard.GetComponent<Card>().spriteNum;
         int secondCardSpriteNum = secondCard.GetComponent<Card>().spriteNum;
 
-        if(firstCardSpriteNum == secondCardSpriteNum)
+        if (firstCardSpriteNum == secondCardSpriteNum)
         {
             audioSource.PlayOneShot(match);
 
             string info = firstCard.GetComponentInChildren<SpriteRenderer>().sprite.name;   // sprite의 이름 rtanx info에 저장
-            check = int.Parse(info.Substring(info.Length - 1)) -1;  // rtanx 의 x부분 자르기, int 로 변형
+            check = int.Parse(info.Substring(info.Length - 1)) - 1;  // rtanx 의 x부분 자르기, int 로 변형
             // 배열은 0부터 시작하므로 -1
 
             //check = firstCard.GetComponent<Card>().spriteNum;
@@ -187,12 +207,13 @@ public class GameManager : MonoBehaviour
 
     void GameEnd()
     {
+        trialText.text = trialNum.ToString() + "회";      // trialText를 업데이트
         warningBackground.gameObject.SetActive(false);
         Time.timeScale = 0f;
         isRunning = false;
         endPanel.SetActive(true);
 
-        if (time > maxTime)
+        if (time > maxTime)         // 남은 횟수가 0이면 클리어를 못한 것이므로!
             time = maxTime;
 
         thisScoreText.text = time.ToString("N2");
@@ -235,8 +256,8 @@ public class GameManager : MonoBehaviour
 
     public void RetryGame()
     {
-       // SceneManager.LoadScene("GameScene");
-        SceneManager.LoadScene("MainScene1");
+        // SceneManager.LoadScene("GameScene");
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
 
     }
 
