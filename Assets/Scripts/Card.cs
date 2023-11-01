@@ -4,33 +4,37 @@ using UnityEngine;
 
 public class Card : MonoBehaviour
 {
-    public AudioClip flip;  // ���� ���� ��ü
-    public AudioSource audioSource; // ���� ������ �÷��� �� ������
+    public AudioClip flip;  // 
+    public AudioSource audioSource; //
 
     public Animator anim;
-    
+
     public int spriteNum = 0;
     public void OpenCard()
     {
-        audioSource.PlayOneShot(flip);
-
-        anim.SetBool("isOpen", true);
-
-        transform.Find("Front").gameObject.SetActive(true);
-        transform.Find("Back").gameObject.SetActive(false);
-
-        if (GameManager.I.firstCard == null)
+        if(GameManager.I.isRunning == true)
         {
-            GameManager.I.firstCard = gameObject;
-        }
-        else
-        {
-            GameManager.I.secondCard = gameObject;
-            GameManager.I.IsMatched();
-        }
+            audioSource.PlayOneShot(flip);
 
-        //CloseCard 5���� ����
-        Invoke("CloseCard", 5.0f);
+            anim.SetBool("isOpen", true);
+
+            transform.Find("Front").gameObject.SetActive(true);
+            transform.Find("Back").gameObject.SetActive(false);
+
+            if (GameManager.I.firstCard == null)
+            {
+                GameManager.I.firstCard = gameObject;
+            }
+            else
+            {
+                GameManager.I.secondCard = gameObject;
+                GameManager.I.IsMatched();
+            }
+
+            //CloseCard 5초후에 닫힘
+            Invoke("CloseCard", 5.0f);
+        }
+       
     }
 
     public void DestrotyCard()

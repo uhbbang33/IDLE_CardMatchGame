@@ -32,15 +32,15 @@ public class GameManager : MonoBehaviour
     float time;
     public float maxTime;
     public float warningTime;
-    bool isRunning = true;
+    public bool isRunning = true;
 
 
     public AudioManager audioManager;
 
     public AudioClip match;
     public AudioClip failed;
-    public AudioClip bestscore;
-    public AudioClip lowscore;
+    public AudioClip bestscoreSound;
+    public AudioClip lowscoreSound;
     public AudioSource audioSource;
 
     public Sprite[] sprites;    // sprite를 Inspector창에서 받기 위한 선언
@@ -50,13 +50,18 @@ public class GameManager : MonoBehaviour
     public GameObject warningBackground;
     //enum TeamName { 문원정, 조병웅, 김국민, 김종욱, 김희진, 박준형}
 
+    Scene scene;
+
     private void Awake()
     {
         I = this;
+        scene = SceneManager.GetActiveScene();
+        isRunning = true;
     }
 
     void Start()
     {
+        //PlayerPrefs.DeleteAll();
 
         transaddtxt = addTxt.GetComponent<RectTransform>();
         Time.timeScale = 1.0f;
@@ -105,73 +110,77 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
-        float addy = transaddtxt.anchoredPosition.y;         // addtxt 위치
-        addy += 0.5f;                                        // addtxt y값 상승
-        transaddtxt.anchoredPosition = new Vector2(0, addy); // addtxt y값 상승
-
-        c -= 1;                                              // 글자 색상 투명하게
-        addTxt.color = new Color32(255, 0, 0, c);            // 글자 색상 투명하게
-
-        time += Time.deltaTime;
-
-        if (time > warningTime)
+        if(isRunning)
         {
-            warningBackground.gameObject.SetActive(true);
-            audioManager.GetComponent<AudioSource>().pitch = 1.5f;
+            float addy = transaddtxt.anchoredPosition.y;         // addtxt 위치
+            addy += 0.5f;                                        // addtxt y값 상승
+            transaddtxt.anchoredPosition = new Vector2(0, addy); // addtxt y값 상승
+
+            c -= 1;                                              // 글자 색상 투명하게
+            addTxt.color = new Color32(255, 0, 0, c);            // 글자 색상 투명하게
+
+            time += Time.deltaTime;
+            if (time > maxTime)
+                GameEnd();
+
+            if (time > warningTime)
+            {
+                warningBackground.gameObject.SetActive(true);
+                audioManager.GetComponent<AudioSource>().pitch = 1.5f;
+            }
+            timeTxt.text = time.ToString("N2");
         }
 
-        if (time > maxTime)
-            GameEnd();
-
-
-
-        timeTxt.text = time.ToString("N2");
+        
     }
 
     public void IsMatched()
     {
-        int firstCardSpriteNum = firstCard.GetComponent<Card>().spriteNum;
-        int secondCardSpriteNum = secondCard.GetComponent<Card>().spriteNum;
-
-        if(firstCardSpriteNum == secondCardSpriteNum)
+        if (isRunning)
         {
-            audioSource.PlayOneShot(match);
+            int firstCardSpriteNum = firstCard.GetComponent<Card>().spriteNum;
+            int secondCardSpriteNum = secondCard.GetComponent<Card>().spriteNum;
 
-            string info = firstCard.GetComponentInChildren<SpriteRenderer>().sprite.name;   // sprite의 이름 rtanx info에 저장
-            check = int.Parse(info.Substring(info.Length - 1)) -1;  // rtanx 의 x부분 자르기, int 로 변형
-            // 배열은 0부터 시작하므로 -1
+            if (firstCardSpriteNum == secondCardSpriteNum)
+            {
+                audioSource.PlayOneShot(match);
 
-            //check = firstCard.GetComponent<Card>().spriteNum;
+                string info = firstCard.GetComponentInChildren<SpriteRenderer>().sprite.name;   // sprite의 이름 rtanx info에 저장
+                check = int.Parse(info.Substring(info.Length - 1)) - 1;  // rtanx 의 x부분 자르기, int 로 변형
+                                                                         // 배열은 0부터 시작하므로 -1
 
-            namelist[check].SetActive(true);            // Active True
-            StartCoroutine(nActiveFalse(check));
+                //check = firstCard.GetComponent<Card>().spriteNum;
+
+                namelist[check].SetActive(true);            // Active True
+                StartCoroutine(nActiveFalse(check));
 
 
-            firstCard.GetComponent<Card>().DestrotyCard();
-            secondCard.GetComponent<Card>().DestrotyCard();
+                firstCard.GetComponent<Card>().DestrotyCard();
+                secondCard.GetComponent<Card>().DestrotyCard();
 
-            int cardsLeft = GameObject.Find("Cards").transform.childCount;
-            if (cardsLeft == 2)
-                Invoke("GameEnd", 0.5f);
+                int cardsLeft = GameObject.Find("Cards").transform.childCount;
+                if (cardsLeft == 2)
+                    Invoke("GameEnd", 0.5f);
+            }
+            else
+            {
+                audioSource.PlayOneShot(failed);
+
+                firstCard.GetComponent<Card>().CloseCard();
+                secondCard.GetComponent<Card>().CloseCard();
+
+                // 시간 추가 기능
+                time += 5;
+                addTxt.color = new Color32(255, 0, 0, 255);             // 글자색 RED
+                c = 0;                                                  // 투명도 초기화
+                transaddtxt.anchoredPosition = new Vector2(0, 450);     // 글자 위치 초기화 (진행시간 위)
+                addTxt.gameObject.SetActive(true);                      // addTXT 활성화
+                Invoke("ActiveFalse", 1.0f);                            // 1초 후 ActiveFalse 실행
+            }
+
+            firstCard = null;
+            secondCard = null;
         }
-        else
-        {
-            audioSource.PlayOneShot(failed);
-
-            firstCard.GetComponent<Card>().CloseCard();
-            secondCard.GetComponent<Card>().CloseCard();
-
-            // 시간 추가 기능
-            time += 5;
-            addTxt.color = new Color32(255, 0, 0, 255);             // 글자색 RED
-            c = 0;                                                  // 투명도 초기화
-            transaddtxt.anchoredPosition = new Vector2(0, 450);     // 글자 위치 초기화 (진행시간 위)
-            addTxt.gameObject.SetActive(true);                      // addTXT 활성화
-            Invoke("ActiveFalse", 1.0f);                            // 1초 후 ActiveFalse 실행
-        }
-
-        firstCard = null;
-        secondCard = null;
     }
 
     void ActiveFalse()
@@ -185,11 +194,14 @@ public class GameManager : MonoBehaviour
         namelist[check].SetActive(false);
     }
 
+    /* 게임 종료 시 일어나는 함수 */
     void GameEnd()
     {
+        string sceneName = scene.name;
+        isRunning = false;
         warningBackground.gameObject.SetActive(false);
         Time.timeScale = 0f;
-        isRunning = false;
+
         endPanel.SetActive(true);
 
         if (time > maxTime)
@@ -197,34 +209,137 @@ public class GameManager : MonoBehaviour
 
         thisScoreText.text = time.ToString("N2");
 
-        //endTxt.SetActive(true);
-        if (time >= maxTime)
+        /*하드 게임 플레이시 최고점수 및 현재점수 기록*/
+        if(sceneName == "MainScene2")
         {
-            audioSource.PlayOneShot(lowscore);
+            GameHardScore();
         }
-        else if (PlayerPrefs.HasKey("bestscore") == false)
+        /*헬 게임 플레이시 최고점수 및 현재점수 기록*/
+        else if (sceneName == "MainScene3")
         {
-            // 게임종료시 베스트 스코어면 나오는 노래
-            audioSource.PlayOneShot(bestscore);
-            PlayerPrefs.SetFloat("bestscore", time);
-        }
-        else if (time < PlayerPrefs.GetFloat("bestscore"))
-        {
-            // 게임종료시 베스트 스코어보다 낮으면 나오는 노래
-            audioSource.PlayOneShot(bestscore);
-            PlayerPrefs.SetFloat("bestscore", time);
+            GameHellScore();
         }
         else
         {
-            // 게임종료시 베스트 스코어보다 낮으면 나오는 노래
-            audioSource.PlayOneShot(lowscore);
+            GameNormalScore();
         }
 
-        float maxScore = PlayerPrefs.GetFloat("bestscore");
-        maxScoreText.text = maxScore.ToString("N2");
-        EndGameBgmStop();
+        //endTxt.SetActive(true);
+        
     }
 
+    /*노말 게임 최고점수 현재점수 기록*/
+    void GameNormalScore()
+    {
+        string sceneName = scene.name;
+        string bestscore = "normalscore";
+
+        if (sceneName == "MainScene1")
+        {
+            //endTxt.SetActive(true);
+            if (time >= maxTime)
+            {
+                audioSource.PlayOneShot(lowscoreSound);
+            }
+            else if (PlayerPrefs.HasKey(bestscore) == false)
+            {
+                // 게임종료시 베스트 스코어면 나오는 노래
+                audioSource.PlayOneShot(bestscoreSound);
+                PlayerPrefs.SetFloat(bestscore, time);
+            }
+            else if (time < PlayerPrefs.GetFloat(bestscore))
+            {
+                // 게임종료시 베스트 스코어보다 낮으면 나오는 노래
+                audioSource.PlayOneShot(bestscoreSound);
+                PlayerPrefs.SetFloat(bestscore, time);
+            }
+            else
+            {
+                // 게임종료시 베스트 스코어보다 낮으면 나오는 노래
+                audioSource.PlayOneShot(lowscoreSound);
+            }
+
+            float maxScore = PlayerPrefs.GetFloat(bestscore);
+            maxScoreText.text = maxScore.ToString("N2");
+            EndGameBgmStop();
+        }
+    }
+
+    /*하드 게임 최고점수 현재점수 기록*/
+    void GameHardScore()
+    {
+        string sceneName = scene.name;
+        string bestscore = "hardscore";
+
+        if (sceneName == "MainScene2")
+        {
+            //endTxt.SetActive(true);
+            if (time >= maxTime)
+            {
+                audioSource.PlayOneShot(lowscoreSound);
+            }
+            else if (PlayerPrefs.HasKey(bestscore) == false)
+            {
+                // 게임종료시 베스트 스코어면 나오는 노래
+                audioSource.PlayOneShot(bestscoreSound);
+                PlayerPrefs.SetFloat(bestscore, time);
+            }
+            else if (time < PlayerPrefs.GetFloat(bestscore))
+            {
+                // 게임종료시 베스트 스코어보다 낮으면 나오는 노래
+                audioSource.PlayOneShot(bestscoreSound);
+                PlayerPrefs.SetFloat(bestscore, time);
+            }
+            else
+            {
+                // 게임종료시 베스트 스코어보다 낮으면 나오는 노래
+                audioSource.PlayOneShot(lowscoreSound);
+            }
+
+            float maxScore = PlayerPrefs.GetFloat(bestscore);
+            maxScoreText.text = maxScore.ToString("N2");
+            EndGameBgmStop();
+        }
+    }
+
+    /*헬 게임 최고점수 현재점수 기록*/
+    void GameHellScore()
+    {
+        string sceneName = scene.name;
+        string bestscore = "hellscore";
+
+        if (sceneName == "MainScene3")
+        {
+            //endTxt.SetActive(true);
+            if (time >= maxTime)
+            {
+                audioSource.PlayOneShot(lowscoreSound);
+            }
+            else if (PlayerPrefs.HasKey(bestscore) == false)
+            {
+                // 게임종료시 베스트 스코어면 나오는 노래
+                audioSource.PlayOneShot(bestscoreSound);
+                PlayerPrefs.SetFloat(bestscore, time);
+            }
+            else if (time < PlayerPrefs.GetFloat(bestscore))
+            {
+                // 게임종료시 베스트 스코어보다 낮으면 나오는 노래
+                audioSource.PlayOneShot(bestscoreSound);
+                PlayerPrefs.SetFloat(bestscore, time);
+            }
+            else
+            {
+                // 게임종료시 베스트 스코어보다 낮으면 나오는 노래
+                audioSource.PlayOneShot(lowscoreSound);
+            }
+
+            float maxScore = PlayerPrefs.GetFloat(bestscore);
+            maxScoreText.text = maxScore.ToString("N2");
+            EndGameBgmStop();
+        }
+    }
+
+    /* 게임 종료시 bgm 멈추는 함수*/
     void EndGameBgmStop()
     {
         if (audioManager != null && audioManager.audioSource != null)
@@ -233,13 +348,17 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    /* 게임 다시시작 함수 */
     public void RetryGame()
     {
-       // SceneManager.LoadScene("GameScene");
-        SceneManager.LoadScene("MainScene1");
 
+        SceneManager.LoadScene(scene.name);
+
+        // SceneManager.LoadScene("GameScene");
+        /*SceneManager.LoadScene("MainScene1");*/
     }
 
+    /* 홈으로 돌아가기 함수 */
     public void GoHomeBtn()
     {
         SceneManager.LoadScene("StartScene");
