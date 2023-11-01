@@ -2424,6 +2424,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee227bfacf24abd4a9a0a524bff96629, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  level: 0
 --- !u!1 &1775964784
 GameObject:
   m_ObjectHideFlags: 0
@@ -2738,6 +2739,7 @@ MonoBehaviour:
   thisScoreText: {fileID: 662937977}
   endPanel: {fileID: 1365248645}
   check: 0
+  level: 0
   maxTime: 50
   warningTime: 30
   audioManager: {fileID: 698801056}

@@ -2725,6 +2725,7 @@ MonoBehaviour:
   thisScoreText: {fileID: 662937977}
   endPanel: {fileID: 1365248645}
   check: 0
+  level: 1
   maxTime: 50
   warningTime: 30
   audioManager: {fileID: 698801056}
@@ -2734,12 +2735,18 @@ MonoBehaviour:
   lowscore: {fileID: 8300000, guid: 3a93e37a5e93a344195c1f694e3ab510, type: 3}
   audioSource: {fileID: 1860800778}
   sprites:
-  - {fileID: 21300000, guid: 967876e1332eb964c9e31236e3d79e24, type: 3}
-  - {fileID: 21300000, guid: 4d3eaf74c250b0e4f913816ec69f74c2, type: 3}
-  - {fileID: 21300000, guid: aaf41f18a9417e5418c12e558b5d7201, type: 3}
-  - {fileID: 21300000, guid: 8ddcebd1eba21ed4fa65d28b59654ddb, type: 3}
-  - {fileID: 21300000, guid: fbe27e140e27886428352d427d750283, type: 3}
-  - {fileID: 21300000, guid: a0fa295e78c99bf4b9433a9c22a079c4, type: 3}
+  - {fileID: 21300000, guid: 5c79390938083e740a66c4cd58041b7f, type: 3}
+  - {fileID: 21300000, guid: 1b600a2df4f71b841873803620364b99, type: 3}
+  - {fileID: 21300000, guid: 425f704a65895e340921f2249cc5a9d9, type: 3}
+  - {fileID: 21300000, guid: 3021c10ca13788a4b9ae4500930c2b8b, type: 3}
+  - {fileID: 21300000, guid: 55645f8019181a444aeaaa83ac7b80ed, type: 3}
+  - {fileID: 21300000, guid: 21704784a45f90f428683542038e848a, type: 3}
+  - {fileID: 21300000, guid: 374d43477c7cace46b611a822127d8b3, type: 3}
+  - {fileID: 21300000, guid: f34fe5b6a1777ce49aa19aca43063905, type: 3}
+  - {fileID: 21300000, guid: b86d03884654db04b82470b75ae900aa, type: 3}
+  - {fileID: 21300000, guid: 34f67c116b82bff46b00dc8d07f444a5, type: 3}
+  - {fileID: 21300000, guid: c32781f052f3bcc469d204edfea53241, type: 3}
+  - {fileID: 21300000, guid: c0099db9d8399a54f850fe5c8b585083, type: 3}
   namelist:
   - {fileID: 265603751}
   - {fileID: 1288667656}
