@@ -10,6 +10,7 @@ public class StartBtn : MonoBehaviour
 
     void Awake()
     {
+        //PlayerPrefs.DeleteAll();
         if (PlayerPrefs.HasKey("bestscore"))
         {
             GetComponent<Button>().interactable = true;

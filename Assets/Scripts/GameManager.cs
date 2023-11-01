@@ -107,11 +107,10 @@ public class GameManager : MonoBehaviour
     {
         float addy = transaddtxt.anchoredPosition.y;         // addtxt 위치
         addy += 0.5f;                                        // addtxt y값 상승
-        transaddtxt.anchoredPosition = new Vector2(0, addy);  // addtxt y값 상승
+        transaddtxt.anchoredPosition = new Vector2(0, addy); // addtxt y값 상승
 
         c -= 1;                                              // 글자 색상 투명하게
         addTxt.color = new Color32(255, 0, 0, c);            // 글자 색상 투명하게
-
 
         time += Time.deltaTime;
 
@@ -192,19 +191,22 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 0f;
         isRunning = false;
         endPanel.SetActive(true);
+
         if (time > maxTime)
             time = maxTime;
-        
+
         thisScoreText.text = time.ToString("N2");
 
         //endTxt.SetActive(true);
-
-        if (PlayerPrefs.HasKey("bestscore") == false)
+        if (time >= maxTime)
+        {
+            audioSource.PlayOneShot(lowscore);
+        }
+        else if (PlayerPrefs.HasKey("bestscore") == false)
         {
             // 게임종료시 베스트 스코어면 나오는 노래
             audioSource.PlayOneShot(bestscore);
             PlayerPrefs.SetFloat("bestscore", time);
-
         }
         else if (time < PlayerPrefs.GetFloat("bestscore"))
         {
