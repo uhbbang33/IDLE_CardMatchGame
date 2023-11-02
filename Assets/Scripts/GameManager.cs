@@ -149,6 +149,9 @@ public class GameManager : MonoBehaviour
             points[randomNum] = tempPosition;
         }
 
+        if (scene.name == "MainScene1")
+            for (int i = 0; i < cardList.Count; ++i)
+                cardList[i].transform.position = points[i];
     }
 
     void Update()
@@ -159,21 +162,19 @@ public class GameManager : MonoBehaviour
             addy += 0.5f;                                        // addtxt y값 상승
             transaddtxt.anchoredPosition = new Vector2(0, addy); // addtxt y값 상승
 
-            Vector3 speed = Vector3.zero;
-            if (scene.name!="MainScene1")
+            //Vector3 speed = Vector3.zero;
+            
+            if (scene.name != "MainScene1" && !isShuffle)
             {
-                if (!isShuffle)
+                for (int i = 0; i < points.Count; i++)
                 {
-                    for (int i = 0; i < points.Count; i++)
+                    if (cardList[i])
                     {
-                        if (cardList[i])
-                        {
-                            cardList[i].transform.position =
-                            //Vector3.MoveTowards(cardList[i].transform.position, points[i], 0.01f);
-                            //Vector3.SmoothDamp(cardList[i].transform.position, points[i], ref speed, 0.05f);
-                            Vector3.Lerp(cardList[i].transform.position, points[i], 0.05f);
-                            //Vector3.Slerp(cardList[i].transform.position, points[i], 0.01f);
-                        }
+                        cardList[i].transform.position =
+                        //Vector3.MoveTowards(cardList[i].transform.position, points[i], 0.01f);
+                        //Vector3.SmoothDamp(cardList[i].transform.position, points[i], ref speed, 0.05f);
+                        Vector3.Lerp(cardList[i].transform.position, points[i], 0.05f);
+                        //Vector3.Slerp(cardList[i].transform.position, points[i], 0.01f);
                     }
                 }
             }
