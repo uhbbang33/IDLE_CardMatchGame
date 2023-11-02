@@ -99,7 +99,6 @@ public class GameManager : MonoBehaviour
 
                 GameObject newCard = Instantiate(card);
                 newCard.transform.parent = GameObject.Find("Cards").transform;
-                newCard.transform.parent.localScale = new Vector3(0.7f, 0.7f, 1f);
 
                 float x = (i / 3) * 1.4f - 2.1f;
                 float y = (i % 3) * 1.4f - 3.0f;
@@ -125,7 +124,7 @@ public class GameManager : MonoBehaviour
 
                 GameObject newCard = Instantiate(card);
                 newCard.transform.parent = GameObject.Find("Cards").transform;
-                newCard.transform.parent.localScale = new Vector3(0.7f, 0.7f, 1f);
+                newCard.transform.parent.localScale = new Vector3(0.8f, 0.8f, 1f);
                 newCard.transform.position = new Vector3(0, -1.5f, 1);
 
                 float x = (i / 6) * 1.4f - 2.1f;
@@ -184,7 +183,7 @@ public class GameManager : MonoBehaviour
                 isShuffle = true;
             }
 
-            c -= 1;                                              
+            c -= 3;                                              
             addTxt.color = new Color32(255, 0, 0, c);            // 글자 색상 투명하게
 
             time += Time.deltaTime;
@@ -256,7 +255,7 @@ public class GameManager : MonoBehaviour
             c = 0;                                                  // 투명도 초기화
             transaddtxt.anchoredPosition = new Vector2(0, 450);     // 글자 위치 초기화 (진행시간 위)
             addTxt.gameObject.SetActive(true);                      // addTXT 활성화
-            Invoke("ActiveFalse", 1.0f);                            // 1초 후 ActiveFalse 실행
+            Invoke("ActiveFalse", 0.3f);                            // 1초 후 ActiveFalse 실행
         }
 
         firstCard = null;

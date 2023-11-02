@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using UnityEngine.EventSystems;
 
 public class StartBtn : MonoBehaviour
 {
@@ -11,7 +12,6 @@ public class StartBtn : MonoBehaviour
 
     void Awake()
     {
-        
         //PlayerPrefs.DeleteAll();
         if (PlayerPrefs.HasKey("bestscore"))
         {
