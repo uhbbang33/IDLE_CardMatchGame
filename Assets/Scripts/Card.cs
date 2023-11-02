@@ -13,6 +13,7 @@ public class Card : MonoBehaviour
     public void OpenCard()
     {
         CancelInvoke("CloseCard");
+        CancelInvoke("CloseCardInvoke");
         if(GameManager.I.isRunning == true)
         {
             audioSource.PlayOneShot(flip);
