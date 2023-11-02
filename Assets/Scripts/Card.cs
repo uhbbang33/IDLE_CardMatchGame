@@ -33,21 +33,9 @@ public class Card : MonoBehaviour
             }
 
             //CloseCard 5초후에 닫힘
-            Invoke("CloseCard", 5.0f);
+            Invoke("CloseCard", 2.5f);
         }
-       
     }
-
-    public void DestrotyCard()
-    {
-        Invoke("DestroyCardInvoke", 0f);
-    }
-
-    void DestroyCardInvoke()
-    {
-        Destroy(gameObject);
-    }
-
     public void CloseCard()
     {
         Invoke("CloseCardInvoke", 0.5f);
@@ -62,5 +50,4 @@ public class Card : MonoBehaviour
         if (gameObject == GameManager.I.firstCard)
             GameManager.I.firstCard = null;
     }
-
 }

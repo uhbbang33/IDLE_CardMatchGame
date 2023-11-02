@@ -235,9 +235,10 @@ public class GameManager : MonoBehaviour
             namelist[check].SetActive(true);            // Active True
             StartCoroutine(nActiveFalse(check));
 
-
-            firstCard.GetComponent<Card>().DestrotyCard();
-            secondCard.GetComponent<Card>().DestrotyCard();
+            Destroy(firstCard);
+            Destroy(secondCard);
+            //firstCard.GetComponent<Card>().DestrotyCard();
+            //secondCard.GetComponent<Card>().DestrotyCard();
 
             int cardsLeft = GameObject.Find("Cards").transform.childCount;
             if (cardsLeft == 2)
