@@ -12,6 +12,7 @@ public class Card : MonoBehaviour
     public int spriteNum = 0;
     public void OpenCard()
     {
+        CancelInvoke("CloseCard");
         if(GameManager.I.isRunning == true)
         {
             audioSource.PlayOneShot(flip);
@@ -60,8 +61,6 @@ public class Card : MonoBehaviour
 
         if (gameObject == GameManager.I.firstCard)
             GameManager.I.firstCard = null;
-        //GameManager.I.firstCard = null;
-
     }
 
 }

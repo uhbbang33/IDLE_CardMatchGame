@@ -228,9 +228,10 @@ public class GameManager : MonoBehaviour
             audioSource.PlayOneShot(match);
             string info = firstCard.GetComponentInChildren<SpriteRenderer>().sprite.name;   // sprite의 이름 rtanx info에 저장
 
+            namelist[check].SetActive(false);
             check = int.Parse(info.Substring(info.Length - 1)) - 1;  // rtanx 의 x부분 자르기, int 로 변형
                                                                      // 배열은 0부터 시작하므로 -1
-
+            
             namelist[check].SetActive(true);            // Active True
             StartCoroutine(nActiveFalse(check));
 
@@ -285,11 +286,14 @@ public class GameManager : MonoBehaviour
 
         endPanel.SetActive(true);
 
-        if (time > maxTime || trialNum == trialLeft)         // 남은 횟수가 0이면 클리어를 못한 것이므로!
-            time = maxTime;
-
         thisScoreText.text = time.ToString("N2");
 
+        if (time > maxTime || trialNum == trialLeft)         // 실패
+        {
+            thisScoreText.text = "Failed";
+            time = maxTime;
+        }
+       
         /*하드 게임 플레이시 최고점수 및 현재점수 기록*/
         if (sceneName == "MainScene2")
         {
@@ -329,13 +333,13 @@ public class GameManager : MonoBehaviour
             }
             else if (time < PlayerPrefs.GetFloat(bestscore))
             {
-                // 게임종료시 베스트 스코어보다 낮으면 나오는 노래
+                // 게임종료시 베스트 스코어보다 좋은 경우 나오는 노래
                 audioSource.PlayOneShot(bestscoreSound);
                 PlayerPrefs.SetFloat(bestscore, time);
             }
             else
             {
-                // 게임종료시 베스트 스코어보다 낮으면 나오는 노래
+                // 게임종료시 베스트 스코어보다 좋지 않은 경우 나오는 노래
                 audioSource.PlayOneShot(lowscoreSound);
             }
 
@@ -366,13 +370,13 @@ public class GameManager : MonoBehaviour
             }
             else if (time < PlayerPrefs.GetFloat(bestscore))
             {
-                // 게임종료시 베스트 스코어보다 낮으면 나오는 노래
+                // 게임종료시 베스트 스코어보다 좋은 경우 나오는 노래
                 audioSource.PlayOneShot(bestscoreSound);
                 PlayerPrefs.SetFloat(bestscore, time);
             }
             else
             {
-                // 게임종료시 베스트 스코어보다 낮으면 나오는 노래
+                // 게임종료시 베스트 스코어보다 좋지 않은 경우 나오는 노래
                 audioSource.PlayOneShot(lowscoreSound);
             }
 
@@ -403,13 +407,13 @@ public class GameManager : MonoBehaviour
             }
             else if (time < PlayerPrefs.GetFloat(bestscore))
             {
-                // 게임종료시 베스트 스코어보다 낮으면 나오는 노래
+                // 게임종료시 베스트 스코어보다 좋은 경우 나오는 노래
                 audioSource.PlayOneShot(bestscoreSound);
                 PlayerPrefs.SetFloat(bestscore, time);
             }
             else
             {
-                // 게임종료시 베스트 스코어보다 낮으면 나오는 노래
+                // 게임종료시 베스트 스코어보다 좋지 않은 경우 나오는 노래
                 audioSource.PlayOneShot(lowscoreSound);
             }
 
@@ -431,12 +435,14 @@ public class GameManager : MonoBehaviour
     /* 게임 다시시작 함수 */
     public void RetryGame()
     {
+        Time.timeScale = 1.0f;
         SceneManager.LoadScene(scene.name);
     }
 
     /* 홈으로 돌아가기 함수 */
     public void GoHomeBtn()
     {
+        Time.timeScale = 1.0f;
         SceneManager.LoadScene("StartScene");
     }
 

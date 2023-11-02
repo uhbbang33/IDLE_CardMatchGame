@@ -1148,7 +1148,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 0.1
+  m_Volume: 0.3
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -3610,9 +3610,9 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 0.1
+  m_Volume: 0.3
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -3716,11 +3716,11 @@ MonoBehaviour:
   maxScoreText: {fileID: 459645729}
   thisScoreText: {fileID: 662937977}
   check: 0
-  maxTime: 120
-  warningTime: 30
+  maxTime: 140
+  warningTime: 120
   isRunning: 1
   trialText: {fileID: 1982262732}
-  trialLeft: 20
+  trialLeft: 30
   trialLeftText: {fileID: 1971605564}
   audioManager: {fileID: 698801056}
   match: {fileID: 8300000, guid: 3533bf50ad517a84a9d2473a1e938d51, type: 3}
@@ -3922,7 +3922,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "12\uD68C"
+  m_Text: "30\uD68C"
 --- !u!222 &1971605565
 CanvasRenderer:
   m_ObjectHideFlags: 0
