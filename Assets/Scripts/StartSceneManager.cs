@@ -44,4 +44,9 @@ public class StartSceneManager : MonoBehaviour
     {
         deleteWarning.SetActive(false);
     }
+    
+    public void ExitGameBtn()
+    {
+        Application.Quit();
+    }
 }
