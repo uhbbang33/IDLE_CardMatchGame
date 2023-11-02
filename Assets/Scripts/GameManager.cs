@@ -75,12 +75,10 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-
         isShuffle = false;
         tempSprite = sprites[0];
         tempSpriteNum = 0;
         //PlayerPrefs.DeleteAll();
-
 
         transaddtxt = addTxt.GetComponent<RectTransform>();
         Time.timeScale = 1.0f;
@@ -147,7 +145,6 @@ public class GameManager : MonoBehaviour
         for (int i = 0; i < cardList.Count; i++)
         {
             int randomNum = Random.Range(0, cardList.Count);
-            Debug.Log(points);
             // swap
             Vector3 tempPosition = points[i];
             points[i] = points[randomNum];
@@ -164,22 +161,26 @@ public class GameManager : MonoBehaviour
             addy += 0.5f;                                        // addtxt y값 상승
             transaddtxt.anchoredPosition = new Vector2(0, addy); // addtxt y값 상승
 
-            Vector3 speed = Vector3.zero;
-
-            if (!isShuffle)
+            /*Vector3 speed = Vector3.zero;
+            if (scene.name!="MainScene1")
             {
-                for (int i = 0; i < points.Count; i++)
+                if (!isShuffle)
                 {
-                    if (cardList[i])
+                    for (int i = 0; i < points.Count; i++)
                     {
-                        cardList[i].transform.position =
-                        //Vector3.MoveTowards(cardList[i].transform.position, points[i], 0.01f);
-                        //Vector3.SmoothDamp(cardList[i].transform.position, points[i], ref speed, 0.05f);
-                        Vector3.Lerp(cardList[i].transform.position, points[i], 0.05f);
-                        //Vector3.Slerp(cardList[i].transform.position, points[i], 0.01f);
+                        if (cardList[i])
+                        {
+                            cardList[i].transform.position =
+                            //Vector3.MoveTowards(cardList[i].transform.position, points[i], 0.01f);
+                            //Vector3.SmoothDamp(cardList[i].transform.position, points[i], ref speed, 0.05f);
+                            Vector3.Lerp(cardList[i].transform.position, points[i], 0.05f);
+                            //Vector3.Slerp(cardList[i].transform.position, points[i], 0.01f);
+                        }
                     }
                 }
-            }
+            } */
+
+
             if (time > 2)
             {
                 isShuffle = true;
