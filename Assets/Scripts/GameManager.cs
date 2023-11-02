@@ -85,7 +85,7 @@ public class GameManager : MonoBehaviour
 
         // 12개의 카드 생성
         // 카드 sprite를 순차적으로 넣어줌
-        if (scene.name == "MainScene1")
+        if (scene.name == "EasyScene")
         {
             for (int i = 0; i < 12; ++i)
             {
@@ -149,7 +149,7 @@ public class GameManager : MonoBehaviour
             points[randomNum] = tempPosition;
         }
 
-        if (scene.name == "MainScene1")
+        if (scene.name == "EasyScene")
             for (int i = 0; i < cardList.Count; ++i)
                 cardList[i].transform.position = points[i];
     }
@@ -164,7 +164,7 @@ public class GameManager : MonoBehaviour
 
             //Vector3 speed = Vector3.zero;
             
-            if (scene.name != "MainScene1" && !isShuffle)
+            if (scene.name != "EasyScene" && !isShuffle)
             {
                 for (int i = 0; i < points.Count; i++)
                 {
@@ -198,7 +198,7 @@ public class GameManager : MonoBehaviour
             }
             timeTxt.text = time.ToString("N2");
 
-            if (SceneManager.GetActiveScene().name == "MainScene3")
+            if (SceneManager.GetActiveScene().name == "HardScene")
             {
                 if (trialLeft == trialNum)
                 {
@@ -212,7 +212,7 @@ public class GameManager : MonoBehaviour
     {
         if (isRunning)
             trialNum++;                 // IsMatched가 실행될 때, trial Num에 1 추가
-        if (SceneManager.GetActiveScene().name == "MainScene3")
+        if (SceneManager.GetActiveScene().name == "HardScene")
         {
             trialLeftText.text = (trialLeft - trialNum).ToString() + "회";  // 변화 있을 때마다 업데이트
             if (trialLeft - trialNum < 10)
@@ -297,30 +297,30 @@ public class GameManager : MonoBehaviour
         }
        
         /*하드 게임 플레이시 최고점수 및 현재점수 기록*/
-        if (sceneName == "MainScene2")
+        if (sceneName == "NormalScene")
+        {
+            GameNormalScore();
+        }
+        /*헬 게임 플레이시 최고점수 및 현재점수 기록*/
+        else if (sceneName == "HardScene")
         {
             GameHardScore();
         }
-        /*헬 게임 플레이시 최고점수 및 현재점수 기록*/
-        else if (sceneName == "MainScene3")
-        {
-            GameHellScore();
-        }
         else
         {
-            GameNormalScore();
+            GameEasyScore();
         }
         //endTxt.SetActive(true);
 
     }
 
     /*노말 게임 최고점수 현재점수 기록*/
-    void GameNormalScore()
+    void GameEasyScore()
     {
         string sceneName = scene.name;
-        string bestscore = "normalscore";
+        string bestscore = "easyscore";
 
-        if (sceneName == "MainScene1")
+        if (sceneName == "EasyScene")
         {
             //endTxt.SetActive(true);
             if (time >= maxTime)
@@ -352,12 +352,12 @@ public class GameManager : MonoBehaviour
     }
 
     /*하드 게임 최고점수 현재점수 기록*/
-    void GameHardScore()
+    void GameNormalScore()
     {
         string sceneName = scene.name;
-        string bestscore = "hardscore";
+        string bestscore = "normalscore";
 
-        if (sceneName == "MainScene2")
+        if (sceneName == "NormalScene")
         {
             //endTxt.SetActive(true);
             if (time >= maxTime)
@@ -389,12 +389,12 @@ public class GameManager : MonoBehaviour
     }
 
     /*헬 게임 최고점수 현재점수 기록*/
-    void GameHellScore()
+    void GameHardScore()
     {
         string sceneName = scene.name;
-        string bestscore = "hellscore";
+        string bestscore = "hardscore";
 
-        if (sceneName == "MainScene3")
+        if (sceneName == "HardScene")
         {
             //endTxt.SetActive(true);
             if (time >= maxTime)

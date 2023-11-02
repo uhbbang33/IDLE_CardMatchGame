@@ -12,11 +12,11 @@ public class StartBtn : MonoBehaviour
     void Awake()
     {
         //PlayerPrefs.DeleteAll();
-        if (gameObject.name == "StartBtnN" && PlayerPrefs.HasKey("normalscore"))
+        if (gameObject.name == "StartBtnN" && PlayerPrefs.HasKey("easyscore"))
         {
             GetComponent<Button>().interactable = true;
         }
-        else if (gameObject.name == "StartBtnH" && PlayerPrefs.HasKey("hardscore"))
+        else if (gameObject.name == "StartBtnH" && PlayerPrefs.HasKey("normalscore"))
         {
             GetComponent<Button>().interactable = true;
         }
@@ -25,16 +25,16 @@ public class StartBtn : MonoBehaviour
 
     public void GameStartE()
     {
-        SceneManager.LoadScene("MainScene1");
+        SceneManager.LoadScene("EasyScene");
     }
 
     public void GameStartN()
     {
-        SceneManager.LoadScene("MainScene2");
+        SceneManager.LoadScene("NormalScene");
     }
 
     public void GameStartH()
     {
-        SceneManager.LoadScene("MainScene3");
+        SceneManager.LoadScene("HardScene");
     }
 }
