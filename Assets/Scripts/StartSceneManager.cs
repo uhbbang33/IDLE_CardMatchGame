@@ -11,7 +11,7 @@ public class StartSceneManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        settingUI.SetActive(false);
     }
 
     // Update is called once per frame
@@ -44,5 +44,4 @@ public class StartSceneManager : MonoBehaviour
     {
         deleteWarning.SetActive(false);
     }
-
 }

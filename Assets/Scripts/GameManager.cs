@@ -435,12 +435,14 @@ public class GameManager : MonoBehaviour
     /* 게임 다시시작 함수 */
     public void RetryGame()
     {
+        Time.timeScale = 1.0f;
         SceneManager.LoadScene(scene.name);
     }
 
     /* 홈으로 돌아가기 함수 */
     public void GoHomeBtn()
     {
+        Time.timeScale = 1.0f;
         SceneManager.LoadScene("StartScene");
     }
 
