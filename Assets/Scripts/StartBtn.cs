@@ -7,16 +7,19 @@ using UnityEngine.SceneManagement;
 public class StartBtn : MonoBehaviour
 {
     private Button button;
-    
 
     void Awake()
     {
-        
         //PlayerPrefs.DeleteAll();
-        if (PlayerPrefs.HasKey("bestscore"))
+        if (gameObject.name == "StartBtnN" && PlayerPrefs.HasKey("normalscore"))
         {
             GetComponent<Button>().interactable = true;
         }
+        else if (gameObject.name == "StartBtnH" && PlayerPrefs.HasKey("hardscore"))
+        {
+            GetComponent<Button>().interactable = true;
+        }
+
     }
 
     public void GameStartE()
@@ -32,10 +35,5 @@ public class StartBtn : MonoBehaviour
     public void GameStartH()
     {
         SceneManager.LoadScene("MainScene3");
-    }
-
-    public void OnNormal()
-    {
-        GetComponent<Button>().interactable = true;
     }
 }

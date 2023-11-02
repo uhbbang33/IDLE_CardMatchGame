@@ -99,7 +99,6 @@ public class GameManager : MonoBehaviour
 
                 GameObject newCard = Instantiate(card);
                 newCard.transform.parent = GameObject.Find("Cards").transform;
-                newCard.transform.parent.localScale = new Vector3(0.7f, 0.7f, 1f);
 
                 float x = (i / 3) * 1.4f - 2.1f;
                 float y = (i % 3) * 1.4f - 3.0f;
@@ -125,7 +124,7 @@ public class GameManager : MonoBehaviour
 
                 GameObject newCard = Instantiate(card);
                 newCard.transform.parent = GameObject.Find("Cards").transform;
-                newCard.transform.parent.localScale = new Vector3(0.7f, 0.7f, 1f);
+                newCard.transform.parent.localScale = new Vector3(0.8f, 0.8f, 1f);
                 newCard.transform.position = new Vector3(0, -1.5f, 1);
 
                 float x = (i / 6) * 1.4f - 2.1f;
@@ -184,7 +183,7 @@ public class GameManager : MonoBehaviour
                 isShuffle = true;
             }
 
-            c -= 1;                                              
+            c -= 3;                                              
             addTxt.color = new Color32(255, 0, 0, c);            // 글자 색상 투명하게
 
             time += Time.deltaTime;
@@ -229,9 +228,10 @@ public class GameManager : MonoBehaviour
             audioSource.PlayOneShot(match);
             string info = firstCard.GetComponentInChildren<SpriteRenderer>().sprite.name;   // sprite의 이름 rtanx info에 저장
 
+            namelist[check].SetActive(false);
             check = int.Parse(info.Substring(info.Length - 1)) - 1;  // rtanx 의 x부분 자르기, int 로 변형
                                                                      // 배열은 0부터 시작하므로 -1
-
+            
             namelist[check].SetActive(true);            // Active True
             StartCoroutine(nActiveFalse(check));
 
@@ -256,7 +256,7 @@ public class GameManager : MonoBehaviour
             c = 0;                                                  // 투명도 초기화
             transaddtxt.anchoredPosition = new Vector2(0, 450);     // 글자 위치 초기화 (진행시간 위)
             addTxt.gameObject.SetActive(true);                      // addTXT 활성화
-            Invoke("ActiveFalse", 1.0f);                            // 1초 후 ActiveFalse 실행
+            Invoke("ActiveFalse", 0.3f);                            // 1초 후 ActiveFalse 실행
         }
 
         firstCard = null;
@@ -286,11 +286,14 @@ public class GameManager : MonoBehaviour
 
         endPanel.SetActive(true);
 
-        if (time > maxTime || trialNum == trialLeft)         // 남은 횟수가 0이면 클리어를 못한 것이므로!
-            time = maxTime;
-
         thisScoreText.text = time.ToString("N2");
 
+        if (time > maxTime || trialNum == trialLeft)         // 실패
+        {
+            thisScoreText.text = "Failed";
+            time = maxTime;
+        }
+       
         /*하드 게임 플레이시 최고점수 및 현재점수 기록*/
         if (sceneName == "MainScene2")
         {
@@ -330,13 +333,13 @@ public class GameManager : MonoBehaviour
             }
             else if (time < PlayerPrefs.GetFloat(bestscore))
             {
-                // 게임종료시 베스트 스코어보다 낮으면 나오는 노래
+                // 게임종료시 베스트 스코어보다 좋은 경우 나오는 노래
                 audioSource.PlayOneShot(bestscoreSound);
                 PlayerPrefs.SetFloat(bestscore, time);
             }
             else
             {
-                // 게임종료시 베스트 스코어보다 낮으면 나오는 노래
+                // 게임종료시 베스트 스코어보다 좋지 않은 경우 나오는 노래
                 audioSource.PlayOneShot(lowscoreSound);
             }
 
@@ -367,13 +370,13 @@ public class GameManager : MonoBehaviour
             }
             else if (time < PlayerPrefs.GetFloat(bestscore))
             {
-                // 게임종료시 베스트 스코어보다 낮으면 나오는 노래
+                // 게임종료시 베스트 스코어보다 좋은 경우 나오는 노래
                 audioSource.PlayOneShot(bestscoreSound);
                 PlayerPrefs.SetFloat(bestscore, time);
             }
             else
             {
-                // 게임종료시 베스트 스코어보다 낮으면 나오는 노래
+                // 게임종료시 베스트 스코어보다 좋지 않은 경우 나오는 노래
                 audioSource.PlayOneShot(lowscoreSound);
             }
 
@@ -404,13 +407,13 @@ public class GameManager : MonoBehaviour
             }
             else if (time < PlayerPrefs.GetFloat(bestscore))
             {
-                // 게임종료시 베스트 스코어보다 낮으면 나오는 노래
+                // 게임종료시 베스트 스코어보다 좋은 경우 나오는 노래
                 audioSource.PlayOneShot(bestscoreSound);
                 PlayerPrefs.SetFloat(bestscore, time);
             }
             else
             {
-                // 게임종료시 베스트 스코어보다 낮으면 나오는 노래
+                // 게임종료시 베스트 스코어보다 좋지 않은 경우 나오는 노래
                 audioSource.PlayOneShot(lowscoreSound);
             }
 
