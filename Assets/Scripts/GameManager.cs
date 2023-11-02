@@ -194,7 +194,6 @@ public class GameManager : MonoBehaviour
             check = int.Parse(info.Substring(info.Length - 1)) -1;  // rtanx 의 x부분 자르기, int 로 변형
             // 배열은 0부터 시작하므로 -1
             // check = firstCard.GetComponent<Card>().spriteNum;
-            Debug.Log(check);
             namelist[check].SetActive(true);            // Active True
             StartCoroutine(nActiveFalse(check));
 
