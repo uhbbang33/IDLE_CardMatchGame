@@ -14,8 +14,6 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager I;
 
-    static public int level;
-
     public GameObject card;
     public GameObject firstCard;
     public GameObject secondCard;
@@ -87,7 +85,7 @@ public class GameManager : MonoBehaviour
 
         // 12개의 카드 생성
         // 카드 sprite를 순차적으로 넣어줌
-        if (level == 0)
+        if (scene.name == "MainScene1")
         {
             for (int i = 0; i < 12; ++i)
             {
@@ -105,7 +103,8 @@ public class GameManager : MonoBehaviour
 
                 float x = (i / 3) * 1.4f - 2.1f;
                 float y = (i % 3) * 1.4f - 3.0f;
-                newCard.transform.position = new Vector3(x, y, 0);
+                newCard.transform.position = new Vector3(x, y, 1);
+                points.Add(new Vector3(x, y, 1));
 
                 newCard.transform.Find("Front").GetComponent<SpriteRenderer>().sprite = tempSprite;
                 newCard.GetComponent<Card>().spriteNum = tempSpriteNum; // card에 spriteNum 넣어주기
@@ -161,7 +160,7 @@ public class GameManager : MonoBehaviour
             addy += 0.5f;                                        // addtxt y값 상승
             transaddtxt.anchoredPosition = new Vector2(0, addy); // addtxt y값 상승
 
-            /*Vector3 speed = Vector3.zero;
+            Vector3 speed = Vector3.zero;
             if (scene.name!="MainScene1")
             {
                 if (!isShuffle)
@@ -178,8 +177,7 @@ public class GameManager : MonoBehaviour
                         }
                     }
                 }
-            } */
-
+            }
 
             if (time > 2)
             {
