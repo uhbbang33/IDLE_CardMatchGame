@@ -198,12 +198,11 @@ public class GameManager : MonoBehaviour
             }
             timeTxt.text = time.ToString("N2");
 
-            if (SceneManager.GetActiveScene().name == "MainScene3_Woong")
+            if (SceneManager.GetActiveScene().name == "MainScene3")
             {
                 if (trialLeft == trialNum)
                 {
                     GameEnd();
-                    time = maxTime;
                 }
             }
         }
@@ -213,7 +212,7 @@ public class GameManager : MonoBehaviour
     {
         if (isRunning)
             trialNum++;                 // IsMatched가 실행될 때, trial Num에 1 추가
-        if (SceneManager.GetActiveScene().name == "MainScene3_Woong")
+        if (SceneManager.GetActiveScene().name == "MainScene3")
         {
             trialLeftText.text = (trialLeft - trialNum).ToString() + "회";  // 변화 있을 때마다 업데이트
             if (trialLeft - trialNum < 10)
@@ -287,7 +286,7 @@ public class GameManager : MonoBehaviour
 
         endPanel.SetActive(true);
 
-        if (time > maxTime)         // 남은 횟수가 0이면 클리어를 못한 것이므로!
+        if (time > maxTime || trialNum == trialLeft)         // 남은 횟수가 0이면 클리어를 못한 것이므로!
             time = maxTime;
 
         thisScoreText.text = time.ToString("N2");
