@@ -79,19 +79,19 @@
 
 ![GameStartScene](./Assets/Images/GameStartDeactivated.png)
 
- __게임 시작 화면__  
+ __옵션__  
  <br/>
-3가지 난이도로 나뉘어져 있으며 우측 상단에는 옵션버튼이 있음  
-플레이 초기 화면이기에 Noraml Hard난이도는 잠금, Easy만 활성화  
+![alt](./Assets/Images/OptionFile.png)
 
-![alt](./Assets/Images/OptionFile.png)  
+* 3가지 난이도로 나뉘어져 있으며 우측 상단에는 옵션버튼이 있음  
+* 플레이 초기 화면이기에 Noraml Hard난이도는 잠금, Easy만 활성화  
+
 <br/>
+
+__데이터 삭제__  
 
 ![Option](./Assets/Images/OptionDeleteFile.png)  
 
-
-__옵션__  
-<br/>
 * 플레이어 데이터 초기화 가능  
 * 초기화시 경고문구 출력 및 3초 후 사라짐
 
